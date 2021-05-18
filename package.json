@@ -1,0 +1,19 @@
+{
+  "name": "epsoj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwwang2003/epsoj.git"
+  },
+  "author": "Jun Wei Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwwang2003/epsoj/issues"
+  },
+  "homepage": "https://github.com/jwwang2003/epsoj#readme"
+}
