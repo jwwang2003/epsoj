@@ -10,10 +10,20 @@
     "type": "git",
     "url": "git+https://github.com/jwwang2003/epsoj.git"
   },
-  "author": "Jun Wei Wang",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jwwang2003/epsoj/issues"
   },
-  "homepage": "https://github.com/jwwang2003/epsoj#readme"
+  "homepage": "https://github.com/jwwang2003/epsoj#readme",
+  "devDependencies": {
+    "brotli-webpack-plugin": "^1.1.0",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.6.0",
+    "webpack": "^5.37.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-node-externals": "^3.0.0"
+  }
 }
