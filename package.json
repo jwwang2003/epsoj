@@ -1,15 +1,20 @@
 {
   "name": "epsoj",
   "version": "1.0.0",
-  "description": "",
+  "description": "Elgin Park Secondary Online Judge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node build/bundle.js",
+    "dev": "webpack serve --config webpack.client.js --mode development",
+    "build-server": "webpack --config webpack.server.js --mode production",
+    "build-client": "webpack --config webpack.client.js --mode production",
+    "build": "npm run build-client && npm run build-server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jwwang2003/epsoj.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -17,13 +22,22 @@
   },
   "homepage": "https://github.com/jwwang2003/epsoj#readme",
   "devDependencies": {
-    "brotli-webpack-plugin": "^1.1.0",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "core-js": "^3.12.1",
     "html-webpack-plugin": "^5.3.1",
-    "mini-css-extract-plugin": "^1.6.0",
-    "webpack": "^5.37.0",
-    "webpack-bundle-analyzer": "^4.4.2",
+    "regenerator-runtime": "^0.13.7",
+    "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3",
     "webpack-node-externals": "^3.0.0"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^5.2.0"
   }
 }
