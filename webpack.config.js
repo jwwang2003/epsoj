@@ -1,36 +1,14 @@
-const webpack = require('webpack');
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
+const zlib = require("zlib");
 
-const server = {
-  entry: path.join(__dirname, 'server/index.js'),
-  mode: process.env.NODE_ENV || 'development',
-  target: 'node',
-  externals: [
-    nodeExternals()
-  ],
-  module: {
-    rules: [
-      {
-        test: /.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.js'],
-  },
-  plugins: [],
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'server.js',
-  },
-}
+const mode = process.env.NODE_ENV || 'development'
+const isDev = mode === 'development' ? true : false
 
-const client = {
+module.exports = {
   entry: path.join(__dirname, 'client/index.js'),
-  mode: process.env.NODE_ENV || 'development',
+  mode: mode,
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -45,12 +23,33 @@ const client = {
       },
     ],
   },
+  plugins: [
+    isDev && new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "common", "index.html")
+    }),
+    !isDev && new CompressionPlugin({
+      filename: "[path][base].br",
+      algorithm: "brotliCompress",
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: {
+        params: {
+          [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+        },
+      },
+      threshold: 1024,
+      minRatio: 0.8,
+      deleteOriginalAssets: false,
+    }),
+
+  ].filter(Boolean),
   optimization: {
     splitChunks: {
-      name: 'vendor.js',
+      name: 'vendor',
       chunks: 'all'
     },
   },
+  devServer: {
+    hot: true,
+    historyApiFallback: true
+  }
 }
-
-module.exports = [client, server]

@@ -7,16 +7,9 @@ import Routes from './Routes'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
-import theme from '../theme'
+import theme from '../common/theme'
 
 function Main() {
-  React.useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
-  }, [])
-
   return (
     <Router>
       <ThemeProvider theme={theme}>
@@ -33,5 +26,8 @@ const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 renderMethod(<Main />, document.querySelector('#root'))
 
 if(module.hot) {
-  module.hot.accept()
+  module.hot.accept('./Routes', function() {
+    console.log('Hot reloading...')
+    renderMethod(<Main />, document.querySelector('#root'))
+  })
 }

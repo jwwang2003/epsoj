@@ -1,20 +1,21 @@
 import App from './App'
-import Home from './Home'
-import Test from './Test'
+import Login from './Routes/Login'
+import Home from './Routes/Home'
 
 export default [
   {
     ...App,
     routes: [
       {
-        ...Home,
+        ...Login,
         path: '/',
         exact: true
       },
       {
-        ...Test,
-        path: '/test'
-      }
+        ...Home,
+        path: '/home'
+      },
+      
     ]
   }
 ]
