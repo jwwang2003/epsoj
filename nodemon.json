@@ -1,0 +1,13 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    "./build"
+  ],
+  "execMap": {
+    "js": "babel-node server/index.js"
+  },
+  "watch": [
+    "./server"
+  ],
+  "ext": "js"
+}
