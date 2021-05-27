@@ -16,7 +16,10 @@
     "postcss-preset-env": "^6.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-virtualized": "^9.22.3",
+    "reqwest": "^2.0.5",
+    "xhr2": "^0.2.1"
   },
   "browser": {
     "fs": false,

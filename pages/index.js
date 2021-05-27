@@ -1,22 +1,22 @@
 import { Layout, Typography, Form, Input, Button, Checkbox, Spin } from "antd";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Footer, Content } = Layout;
 const { Text, Link, Paragraph } = Typography;
+
+const styleLogin = {
+  position: "absolute",
+  height: "100%",
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+}
 
 export default function Home() {
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout className="bigBox">
       <Content style={{ position: "relative" }}>
-        <div
-          style={{
-            position: "absolute",
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <div style={styleLogin}>
           <Login />
         </div>
       </Content>

@@ -28,6 +28,10 @@ module.exports = {
       {
         source: "/App/:any*",
         destination: "/App"
+      },
+      {
+        source: "/Admin/:any*",
+        destination: "/Admin"
       }
     ];
   }

@@ -7,7 +7,7 @@ import '../styles/global.css'
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <Layout style={{position: 'relative', height: "100%"}}>
+    <Layout className="bigBox">
       <Header>
         <h1 style={{color: 'white'}}>EPS Online Judge</h1>
       </Header>

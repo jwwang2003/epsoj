@@ -1,30 +1,51 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
-  UserOutlined,
-  FileOutlined,
   NotificationOutlined,
+  CloudServerOutlined,
+  UserOutlined,
+  TeamOutlined,
+  FileOutlined,
+  SettingOutlined
 } from "@ant-design/icons";
 import { Switch, Route, Link, useLocation } from "react-router-dom";
+
+import Students from '../../components/Students'
 
 const { Content, Footer, Sider } = Layout;
 
 const routes = [
   {
-    name: "Recents",
-    path: "/App/Recents",
+    name: "Recent",
+    path: "/Admin/Recents",
     icon: <NotificationOutlined />,
   },
   {
+    name: "Students",
+    path: "/Admin/Students",
+    icon: <UserOutlined />,
+    component: Students
+  },
+  {
+    name: "Classes",
+    path: "/Admin/Classes",
+    icon: <TeamOutlined />,
+  },
+  {
     name: "Assignments",
-    path: "/App/Assignments",
+    path: "/Admin/Assignments",
     icon: <FileOutlined />,
   },
   {
-    name: "Me",
-    path: "/App/Me",
-    icon: <UserOutlined />,
+    name: "Server Status",
+    path: "/Admin/Server",
+    icon: <CloudServerOutlined />,
   },
+  {
+    name: "Settings",
+    path: "/Admin/Settings",
+    icon: <SettingOutlined />,
+  }
 ];
 
 export default function App() {
@@ -46,13 +67,12 @@ export default function App() {
         collapsible
         collapsed={collapsed}
         onCollapse={handleCollapsed}
-        style={{ background: "white" }}
+        style={{ 
+          background: "white",
+          height: '100vh'
+        }}
       >
-        <Menu
-          theme="light"
-          defaultSelectedKeys={[location.pathname.split("/")[2]]}
-          mode="inline"
-        >
+        <Menu theme="light" defaultSelectedKeys={[location.pathname.split("/")[2]]} mode="inline">
           {routes.map((route) => {
             return (
               <Menu.Item key={route.path.split("/")[2]} icon={route.icon}>
@@ -62,7 +82,7 @@ export default function App() {
           })}
         </Menu>
       </Sider>
-      <Layout>
+      <Layout className="site-layout">
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
             {paths.map((crumb) => (
@@ -74,7 +94,7 @@ export default function App() {
               {routes.map((route) => {
                 return (
                   <Route key={route.path} path={route.path}>
-                    {route.name}
+                    {route.component ? <route.component /> : route.name}
                   </Route>
                 );
               })}
