@@ -78,6 +78,7 @@ const routes = [
 ];
 
 export default function App() {
+  console.log(window.location)
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [paths, setPaths] = useState([]);
