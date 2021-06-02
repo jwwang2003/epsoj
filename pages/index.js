@@ -1,7 +1,9 @@
-import { Layout, Typography, Form, Input, Button, Checkbox, Spin } from "antd";
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import jwt from 'jsonwebtoken';
+import { useState } from 'react';
+import { message, Layout, Typography, Form, Input, Button, Checkbox, Spin } from "antd";
+import axios from "axios";
+import { useRouter } from "next/router";
+import jwt from "jsonwebtoken";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 const { Footer, Content } = Layout;
 const { Text, Link, Paragraph } = Typography;
@@ -12,59 +14,61 @@ const styleLogin = {
   width: "100%",
   display: "flex",
   alignItems: "center",
-  justifyContent: "center"
-}
+  justifyContent: "center",
+};
 
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: '1mb',
+      sizeLimit: "1mb",
     },
   },
-}
+};
 
 export async function getServerSideProps({ req, res }) {
   // Get the user's session based on the request
   // res.cookie('cookieName','allahu akbar', { maxAge: 1000, httpOnly: false });
-  
+
   console.log(req.cookies);
 
   if (req.cookies.auth) {
-    const token = await jwt.decode(JSON.parse(req.cookies.auth), {json: true});
-    console.log(token)
+    const token = await jwt.decode(JSON.parse(req.cookies.auth), {
+      json: true,
+    });
+    console.log(token);
     if (token.type === "admin") {
       return {
         redirect: {
-          destination: '/admin',
+          destination: "/admin",
           permanent: false,
         },
-      }
+      };
     } else {
       return {
         redirect: {
-          destination: '/app',
+          destination: "/app",
           permanent: false,
         },
-      }
+      };
     }
   } else {
     return {
-      props: {}
-    }
+      props: {},
+    };
   }
 }
 
 export default function Home(props) {
-  console.log(props.child)
+  console.log(props.child);
   return (
-    <Layout className="bigBox">
+    <Layout className="layout-base">
       <Content style={{ position: "relative" }}>
         <div style={styleLogin}>
           <Login />
         </div>
       </Content>
 
-      <Footer style={{background: 'rgb(220,220,220)'}}>
+      <Footer style={{ background: "rgb(220,220,220)" }}>
         <Typography>
           <Paragraph>
             <Text>Developed by Jimmy Wang</Text>
@@ -81,82 +85,100 @@ export default function Home(props) {
 }
 
 function Login() {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const onFinish = (values) => {
+    setLoading(true);
     console.log("Success:", values);
-    axios('http://localhost:8000/auth', {
+    axios("http://localhost:8000/auth", {
       method: "post",
       data: {
-        username: values.studentID, 
+        username: values.studentID,
         password: values.password,
-        remember: values.remember
+        remember: values.remember,
       },
       withCredentials: true,
-    })
-      .then((response) => {
+    }).then(
+      (response) => {
+        setLoading(false);
         console.log(response.data);
         const { OK, result, type } = response.data;
-        
 
-        if(OK) {
-          if(type === "admin") {
-            router.push("/admin/recents")
+        if (OK) {
+          if (type === "admin") {
+            router.push("/admin/recents");
           }
         }
-
-      }, (error) => {
-        console.log(error);
-      });
+      },
+      (error) => {
+        setLoading(false);
+        message.error(error.message)
+      }
+    );
   };
 
   return (
-    <Spin tip="Authenticating..." spinning={false}>
+    <Spin tip="Authenticating..." spinning={loading}>
       <Form
-        style={{
-          width: "300px",
-        }}
-        name="basic"
-        initialValues={{
-          remember: true,
-        }}
+        className="login-form"
+        initialValues={{ remember: true }}
         onFinish={onFinish}
       >
         <Form.Item
-          label="Student ID"
-          name="studentID"
-          rules={[
-            {
-              required: true,
-              message: "Student ID is required!",
-            },
-          ]}
+          name="username"
+          rules={[{ required: true, message: "Please type your Username!" }]}
         >
-          <Input />
+          <Input
+            size="large"
+            prefix={<UserOutlined />}
+            placeholder="Username"
+          />
         </Form.Item>
-
         <Form.Item
-          label="Password"
           name="password"
-          rules={[
-            {
-              required: true,
-              message: "Password is required!",
-            },
-          ]}
+          rules={[{ required: true, message: "Password is required!" }]}
         >
-          <Input.Password />
+          <Input
+            size="large"
+            prefix={<LockOutlined />}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Item>
+        <Form.Item>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
 
-        <Form.Item name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
+          <a className="login-form-forgot" href="">
+            Forgot password
+          </a>
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Sign In
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            Log in
           </Button>
         </Form.Item>
+        <style>{`
+        .login-form {
+          width: clamp(250px, 50vw, 300px);
+        }
+        .login-form-forgot {
+          float: right;
+        }
+        .ant-col-rtl .login-form-forgot {
+          float: left;
+        }
+        .login-form-button {
+          width: 100%;
+        }
+      `}</style>
       </Form>
     </Spin>
   );

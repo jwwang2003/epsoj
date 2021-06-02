@@ -8,7 +8,6 @@ import {
   FileOutlined,
   SettingOutlined
 } from "@ant-design/icons";
-import { Switch, Route, Link, useLocation, Redirect } from "react-router-dom";
 import cookie from 'cookie'
 
 import Students from '../../components/Students'
@@ -78,18 +77,12 @@ const routes = [
 ];
 
 export default function App() {
-  console.log(window.location)
-  const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [paths, setPaths] = useState([]);
 
   const handleCollapsed = () => {
     setCollapsed(!collapsed);
   };
-
-  React.useEffect(() => {
-    setPaths(location.pathname.split("/"));
-  }, [location.pathname]);
 
   return (
     <Layout style={{ minHeight: "100%" }}>
@@ -102,11 +95,10 @@ export default function App() {
           height: '100vh'
         }}
       >
-        <Menu theme="light" defaultSelectedKeys={[]} selectedKeys={[location.pathname.split("/")[2]]} mode="inline">
+        <Menu theme="light" defaultSelectedKeys={[]} selectedKeys={[]} mode="inline">
           {routes.map((route) => {
             return (
               <Menu.Item key={route.path.split("/")[2]} icon={route.icon}>
-                <Link to={route.path}>{route.name}</Link>
               </Menu.Item>
             );
           })}
@@ -120,17 +112,7 @@ export default function App() {
             ))}
           </Breadcrumb>
           <div style={{ height: "100%" }}>
-            <Switch>
-              <Route path="/Admin" exact><Redirect to="/Admin/Recents"/></Route>
-              {routes.map((route) => {
-                return (
-                  <Route key={route.path} path={route.path}>
-                    {route.component ? <div style={{background: '#fff', padding: '1rem'}} ><route.component /></div> : route.name}
-                  </Route>
-                );
-              })}
-              <Route path="/Admin/AddStudent"><div style={{background: '#fff', padding: '1rem'}} ><AddStudent /></div></Route>
-            </Switch>
+
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
