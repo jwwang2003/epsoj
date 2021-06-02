@@ -1,18 +1,8 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import {
-  NotificationOutlined,
-  CloudServerOutlined,
-  UserOutlined,
-  TeamOutlined,
-  FileOutlined,
-  SettingOutlined
-} from "@ant-design/icons";
 import cookie from 'cookie'
 
-import Students from '../../components/Students'
-import Settings from '../../components/Settings'
-import AddStudent from '../../components/AddStudent'
+import MenuItems from '../menuItems/Admin';
 
 export async function getServerSideProps({ req, res }) {
   // Get the user's session based on the request
@@ -41,42 +31,7 @@ export async function getServerSideProps({ req, res }) {
 
 const { Content, Footer, Sider } = Layout;
 
-const routes = [
-  {
-    name: "Recent",
-    path: "/Admin/Recents",
-    icon: <NotificationOutlined />,
-  },
-  {
-    name: "Students",
-    path: "/Admin/Students",
-    icon: <UserOutlined />,
-    component: Students
-  },
-  {
-    name: "Classes",
-    path: "/Admin/Classes",
-    icon: <TeamOutlined />,
-  },
-  {
-    name: "Assignments",
-    path: "/Admin/Assignments",
-    icon: <FileOutlined />,
-  },
-  {
-    name: "Server Status",
-    path: "/Admin/Server",
-    icon: <CloudServerOutlined />,
-  },
-  {
-    name: "Settings",
-    path: "/Admin/Settings",
-    icon: <SettingOutlined />,
-    component: Settings
-  }
-];
-
-export default function App() {
+export default function App({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const [paths, setPaths] = useState([]);
 
@@ -91,17 +46,11 @@ export default function App() {
         collapsed={collapsed}
         onCollapse={handleCollapsed}
         style={{ 
-          background: "white",
-          height: '100vh'
+          background: "white"
         }}
       >
         <Menu theme="light" defaultSelectedKeys={[]} selectedKeys={[]} mode="inline">
-          {routes.map((route) => {
-            return (
-              <Menu.Item key={route.path.split("/")[2]} icon={route.icon}>
-              </Menu.Item>
-            );
-          })}
+          <MenuItems />
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -112,13 +61,15 @@ export default function App() {
             ))}
           </Breadcrumb>
           <div style={{ height: "100%" }}>
-
+            {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          EPSOJ ©2021 By Jimmy Wang
-        </Footer>
       </Layout>
+      <style>{`
+        .ant-layout-sider-trigger {
+          position: absolute;
+        }
+      `}</style>
     </Layout>
   );
 }

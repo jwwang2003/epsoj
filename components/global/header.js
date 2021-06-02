@@ -21,8 +21,8 @@ export default function header() {
           <a>Home</a>
         </Link>
         {!admin && !student ? (
-          <Link href="/">
-            <a>Home</a>
+          <Link href="/Login">
+            <a>Login</a>
           </Link>
         ) : (
           <Link href="/">

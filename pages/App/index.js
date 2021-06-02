@@ -5,7 +5,6 @@ import {
   FileOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
-import { Switch, Route, Link, useLocation } from "react-router-dom";
 
 const { Content, Footer, Sider } = Layout;
 
