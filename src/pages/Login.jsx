@@ -44,7 +44,11 @@ function Login() {
         if (OK) {
           if (type === "admin") history.push("/admin");
           else history.push("/app");
-          message.success("Authentication Success");
+          message.success("Authentication success");
+        } else {
+          if(result === 2) message.warning("User cannot be found");
+          else if(result === 3) message.warning("Password incorrect");
+          else message.warning("Internal server error")
         }
       },
       (error) => {

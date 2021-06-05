@@ -28,9 +28,9 @@ export default function App() {
           timeout={250}
         > */}
       <Switch location={location}>
-        <Route path="/" exact render={Login} />
-        <Route path="/app" render={Main} />
-        <Route path="/admin" render={Main} />
+        <Route path="/" exact component={Login} />
+        <Route path="/app" component={Main} />
+        <Route path="/admin" component={Main} />
       </Switch>
       {/* </CSSTransition>
       </TransitionGroup> */}

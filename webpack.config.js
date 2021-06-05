@@ -67,4 +67,10 @@ module.exports = {
     hot: true,
     historyApiFallback: true
   },
+  optimization: {
+    splitChunks: {
+      // include all types of chunks
+      chunks: 'all',
+    },
+  },
 }

@@ -26,7 +26,7 @@ export default function header() {
         const { OK } = response.data;
         if (OK) {
           history.push("/");
-          message.success("Logout Success");
+          message.success("Logout success");
         }
       },
       (error) => {
