@@ -1,9 +1,7 @@
-import {h} from "preact";
+import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { useHistory } from "react-router-dom";
-import { message } from "antd"
-import Layout from "antd/es/layout";
-import Button from "antd/es/button";
+import { Layout, Button, message } from "antd";
 import axios from "axios";
 
 const { Header } = Layout;
@@ -35,16 +33,21 @@ export default function header() {
         message.error(error.message);
       }
     );
-  }
+  };
 
   return (
-    <Header className="layout-main" style={{ display: "flex", flexDirection: "row" }}>
-      <h1 style={{ color: "white" }}>EPSOJ {admin ? "ADMIN" : false } {student ? "STUDENT" : false }</h1>
+    <Header
+      className="layout-main"
+      style={{ display: "flex", flexDirection: "row" }}
+    >
+      <h1 style={{ color: "white" }}>
+        EPSOJ {admin ? "ADMIN" : false} {student ? "STUDENT" : false}
+      </h1>
       <nav>
-        {!admin && !student ? false : (
-          <Button onClick={handleLogout}>
-            Logout
-          </Button>
+        {!admin && !student ? (
+          false
+        ) : (
+          <Button onClick={handleLogout}>Logout</Button>
         )}
       </nav>
       <style>{`
@@ -60,5 +63,5 @@ export default function header() {
         }
       `}</style>
     </Header>
-  )
+  );
 }

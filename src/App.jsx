@@ -1,5 +1,5 @@
 import { h } from "preact";
-import Layout from "antd/es/layout";
+import { Layout } from "antd";
 import { Switch, Route, Link, useLocation } from "react-router-dom";
 // import { TransitionGroup, CSSTransition } from "react-transition-group";
 

@@ -1,6 +1,5 @@
-import {h} from "preact";
-import Layout from "antd/es/layout";
-import Typography from "antd/es/typography";
+import { h } from "preact";
+import { Layout, Typography } from "antd";
 
 const { Footer } = Layout;
 const { Text, Link, Paragraph } = Typography;
@@ -19,5 +18,5 @@ export default function footer() {
         </Paragraph>
       </Typography>
     </Footer>
-  )
+  );
 }

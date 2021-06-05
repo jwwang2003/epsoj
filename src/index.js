@@ -19,7 +19,7 @@ if (rootElement.hasChildNodes()) {
 }
 
 if (module.hot) {
-  module.hot.accept('./App', function() {
+  module.hot.accept("./App", function () {
     render(<_App />, rootElement);
-  })
+  });
 }
