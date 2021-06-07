@@ -25,6 +25,7 @@ function Login() {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
+  // Handle login
   const onFinish = (values) => {
     setLoading(true);
     axios("http://localhost:8000/auth", {
@@ -87,7 +88,7 @@ function Login() {
           />
         </Form.Item>
         <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Form.Item name="remember" valuePropName="unchecked" noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 

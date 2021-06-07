@@ -6,6 +6,8 @@ import axios from "axios";
 
 const { Header } = Layout;
 
+import logo from "../static/logo.png";
+
 export default function header() {
   const history = useHistory();
   const [admin, setAdmin] = useState(false);
@@ -40,6 +42,7 @@ export default function header() {
       className="layout-main"
       style={{ display: "flex", flexDirection: "row" }}
     >
+      <img src={logo} style={{ margin: "0.8rem 0.4rem 0.8rem 0"}} />
       <h1 style={{ color: "white" }}>
         EPSOJ {admin ? "ADMIN" : false} {student ? "STUDENT" : false}
       </h1>

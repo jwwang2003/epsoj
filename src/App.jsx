@@ -1,39 +1,30 @@
-import { h } from "preact";
+import { h, Fragment } from "preact";
+import { Switch, Route, Link } from "react-router-dom";
+
+// Custom lazyload (code splitting)
+import customLazy from "./components/customLazy";
+
+// UI elements
 import { Layout } from "antd";
-import { Switch, Route, Link, useLocation } from "react-router-dom";
-// import { TransitionGroup, CSSTransition } from "react-transition-group";
+import Header from "./components/globalHeader";
+import Footer from "./components/globalFooter";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-
+// Pages
 import Login from "./pages/Login";
-import Main from "./pages/Main";
-
-import "./App.css";
+const _App = customLazy(() => import(/* webpackChunkName: "LAZY_App" */ "./pages/App"));
+const _Admin = customLazy(() => import(/* webpackChunkName: "LAZY_Admin" */ "./pages/Admin"));
 
 export default function App() {
-  const location = useLocation();
-
   return (
     <Layout className="layout-base">
       <Header />
-      {/* <TransitionGroup style={{ position: "relative" }}>
-        <CSSTransition
-          key={
-            routes.filter(r => { return !r.secure }).map(r => r.path).includes(location.pathname)
-              ? location.key
-              : false
-          }
-          classNames="fade"
-          timeout={250}
-        > */}
-      <Switch location={location}>
-        <Route path="/" exact component={Login} />
-        <Route path="/app" component={Main} />
-        <Route path="/admin" component={Main} />
-      </Switch>
-      {/* </CSSTransition>
-      </TransitionGroup> */}
+      <div style={{ height: "100%" }}>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/app" component={_App} />
+          <Route path="/admin" component={_Admin} />
+        </Switch>
+      </div>
       <Footer />
       <div style={{ height: "0", position: "absolute" }}>
         <Link to="/app" />

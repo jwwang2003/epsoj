@@ -6,7 +6,7 @@ const { Text, Link, Paragraph } = Typography;
 
 export default function footer() {
   return (
-    <Footer style={{ background: "rgb(150,10,255)" }}>
+    <Footer style={{ background: "rgb(25,25,25)" }}>
       <Typography>
         <Paragraph>
           <Text>Developed by Jimmy Wang</Text>

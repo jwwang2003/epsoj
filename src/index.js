@@ -1,5 +1,6 @@
-import { h, render } from "preact";
+import { h } from "preact";
 import { BrowserRouter as Router } from "react-router-dom";
+import { hydrate, render } from "react-dom";
 
 import App from "./App";
 
@@ -11,9 +12,10 @@ const _App = () => (
   </Router>
 );
 
+// React-snap template
 const rootElement = document.getElementById("root");
 if (rootElement.hasChildNodes()) {
-  render(<_App />, rootElement, rootElement.firstElementChild);
+  hydrate(<_App />, rootElement);
 } else {
   render(<_App />, rootElement);
 }

@@ -7,22 +7,6 @@ const jwt = require("jsonwebtoken")
 const app = express();
 app.use(cookieParser());
 
-app.get("/", (req, res, next) => {
-  // Protect secure content
-  const { auth } = req.cookies;
-  const token = jwt.decode(auth);
-  if (auth) return res.redirect(`/${token.type}`);
-  else next();
-});
-
-app.get(["/admin*", "/app*"], (req, res, next) => {
-  // Protect secure content
-  const { auth } = req.cookies;
-
-  if (!auth) return res.redirect("/");
-  else next();
-});
-
 app.use(
   expressStaticGzip("build", {
     enableBrotli: true,
