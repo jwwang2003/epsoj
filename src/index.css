@@ -7,4 +7,20 @@ html body #root {
   display: grid;
   grid-template-rows: min-content 1fr min-content;
   min-height: 100%;
+  overflow-x: hidden;
+}
+
+.sub-page-header {
+  margin-bottom: 1rem;
+  background: #1f1f1f;
+  padding: 1rem;
+  border-radius: 2px;
+}
+
+.sub-page-header > * {
+  margin-right: 0.5rem;
+}
+
+.sub-page-header > *:last-child {
+  margin-right: 0;
 }

@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Layout, Button, message } from "antd";
 import axios from "axios";
 
@@ -9,14 +9,15 @@ const { Header } = Layout;
 import logo from "../static/logo.png";
 
 export default function header() {
+  const location = useLocation();
   const history = useHistory();
   const [admin, setAdmin] = useState(false);
   const [student, setStudent] = useState(false);
 
   useEffect(() => {
-    setStudent(window.location.href.includes("/app"));
-    setAdmin(window.location.href.includes("/admin"));
-  }, [global.window && window.location.href]);
+    setStudent(location.pathname.includes("/app"));
+    setAdmin(location.pathname.includes("admin"));
+  }, [location.pathname]);
 
   const handleLogout = () => {
     axios("http://localhost:8000/auth/logout", {

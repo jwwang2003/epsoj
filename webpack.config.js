@@ -8,6 +8,7 @@ module.exports = (env, argv) => {
   const prod = argv.mode === "production";
   
   return {
+    
     entry: path.resolve(__dirname, './src/index.js'),
     module: {
       rules: [
@@ -26,7 +27,7 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.(png|jpe?g|gif|svg)$/i,
+          test: /\.(png|jpe?g|gif|svg|ico)$/i,
           use: [
             {
               loader: 'file-loader',
@@ -45,14 +46,14 @@ module.exports = (env, argv) => {
       },
     },
     output: {
+      publicPath: "/",
       path: path.resolve(__dirname, "build"),
       filename: '[name].js',
       clean: true
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "public", "index.html"),
-        favicon: "./src/static/logo.ico"
+        template: path.resolve(__dirname, "public", "index.html")
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: "static",

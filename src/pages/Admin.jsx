@@ -12,13 +12,13 @@ import {
 
 import customLazy from "../components/customLazy";
 const Students = customLazy(() =>
-  import(/* webpackChunkName: "LAZY_Students" */ "./sub/Students")
+  import(/* webpackChunkName: "LAZY_Students" */ "./Admin/Students")
 );
 const AddStudents = customLazy(() =>
-  import(/* webpackChunkName: "LAZY_AddStudents" */ "./sub/AddStudents")
+  import(/* webpackChunkName: "LAZY_AddStudents" */ "./Admin/AddStudents")
 );
 const Assignments = customLazy(() =>
-  import(/* webpackChunkName: "LAZY_Assignments" */ "./sub/AddStudents")
+  import(/* webpackChunkName: "LAZY_Assignments" */ "./Admin/Assignments")
 );
 
 const routes = [

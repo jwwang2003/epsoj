@@ -1,5 +1,6 @@
 import { h, Fragment } from "preact";
-import { Table, Tag, Space, Button } from "antd";
+import { Table, Tag, Space, Button, Radio } from "antd";
+import { useHistory } from "react-router-dom";
 
 import {
   useQuery,
@@ -7,19 +8,37 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query";
-import { gql } from "graphql-request";
+import {request, gql } from "graphql-request";
 import axios from "axios";
+
+const test = async (username) => {
+  const query = gql`
+    mutation removeUser($username: String!) {
+      userRemoveOne(filter: {username: $username}) {
+        record {
+          firstName
+        }
+      }
+    }
+  `
+  const variables = {
+    username: username,
+  }
+  console.log(query);
+  const data = await request("http://localhost:8000/api", query, variables)
+  console.log(data)
+};
 
 const columns = [
   {
     title: "First Name",
     dataIndex: "firstName",
-    key: "firstName"
+    key: "firstName",
   },
   {
     title: "Last Name",
     dataIndex: "lastName",
-    key: "lastName"
+    key: "lastName",
   },
   {
     title: "Grade",
@@ -46,10 +65,12 @@ const columns = [
   {
     title: "Action",
     key: "action",
+    dataIndex: ["username"],
     render: (text, record) => (
       <Space size="middle">
+        {console.log(record)}
         <Button size="small">Edit</Button>
-        <Button size="small">Delete</Button>
+        <Button size="small" onClick={() => test(record.username)}>Delete</Button>
       </Space>
     ),
   },
@@ -58,8 +79,23 @@ const columns = [
 const queryClient = new QueryClient();
 
 export default function Students() {
+  const history = useHistory();
+
+  const handleAddStudents = () => history.push("/admin/addStudents");
+
   return (
     <QueryClientProvider client={queryClient}>
+      <div className="sub-page-header">
+        <Button type="dashed">Mass Manage</Button>
+        <Radio.Group>
+          <Radio.Button value="horizontal">Class</Radio.Button>
+          <Radio.Button value="vertical">Grade</Radio.Button>
+          <Radio.Button value="inline">Last Name</Radio.Button>
+        </Radio.Group>
+        <Button type="primary" onClick={handleAddStudents}>
+          Add Student(s)
+        </Button>
+      </div>
       <Render />
     </QueryClientProvider>
   );
@@ -76,11 +112,7 @@ function Render() {
       ) : status === "error" ? (
         <span>Error: {error.message}</span>
       ) : (
-        <Table
-          columns={columns}
-          dataSource={data}
-          style={{ width: "100%" }}
-        />
+        <Table columns={columns} dataSource={data} style={{ width: "100%" }} />
       )}
     </div>
   );
@@ -88,7 +120,7 @@ function Render() {
 
 function getStudents() {
   return useQuery("students", async () => {
-    const { data: responce } = await axios("http://localhost:8000", {
+    const { data: responce } = await axios("http://localhost:8000/api", {
       method: "POST",
       data: {
         query: gql`
@@ -98,7 +130,7 @@ function getStudents() {
               firstName
               lastName
               grade
-
+              username
             }
           }
         `,

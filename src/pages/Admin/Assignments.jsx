@@ -1,5 +1,5 @@
 import { h, Fragment } from "preact";
-import { Table, Tag, Space } from "antd";
+import { Table, Tag, Space, Button } from "antd";
 
 const columns = [
   {
@@ -75,5 +75,12 @@ const data = [
 ];
 
 export default function Assignments() {
-  return <Table columns={columns} dataSource={data} style={{ width: "100%"}}/>;
+  return (
+    <>
+      <div className="sub-page-header">
+        <Button type="primary">Add Assignment</Button>
+      </div>
+      <Table columns={columns} dataSource={data} style={{ width: "100%"}}/>
+    </>
+  )
 }
